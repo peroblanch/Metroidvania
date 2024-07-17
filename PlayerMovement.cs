@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -12,7 +14,9 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb2d;
     private Animator myAnimator;
 
-    public float speed = 2.0f;
+    private bool facingRight = true;
+
+    public float speed = 4.0f;
     public float horizMovement; // 1 || -1 || 0
 
     // Start is called before the first frame update
@@ -30,5 +34,20 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate() {
         rb2d.velocity = new Vector2(horizMovement*speed, rb2d.velocity.y);
+        Flip(horizMovement);
+        myAnimator.SetFloat("speed", Mathf.Abs(horizMovement));
     }
+
+    private void Flip(float movement) {
+        if (movement < 0 && facingRight || movement > 0 && !facingRight)
+        {
+            facingRight = !facingRight;
+
+            Vector3 theScale = transform.localScale;
+            theScale.x *= -1;
+            transform.localScale = theScale;
+        }
+    }
+
+
 }
