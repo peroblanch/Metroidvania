@@ -13,22 +13,22 @@ public class PlayerMovement : MonoBehaviour
     private Animator myAnimator;
 
     public float speed = 2.0f;
-    public float horizMovement;
+    public float horizMovement; // 1 || -1 || 0
 
     // Start is called before the first frame update
     private void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
-        myAnimator = GetComponent<myAnimator>();
+        myAnimator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     private void Update()
     {
-        horizMovement = Input.GetAxis("Horizontal");
+        horizMovement = Input.GetAxisRaw("Horizontal");
     }
 
     private void FixedUpdate() {
-        rb2d.velocity = 
+        rb2d.velocity = new Vector2(horizMovement*speed, rb2d.velocity.y);
     }
 }
